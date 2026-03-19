@@ -676,8 +676,14 @@ footer {
   border-radius: 20px;
 }
 
-#logout-button:hover {
-  background-color: rgba(255, 255, 255, 0.3);
+/* Social sharing buttons */
+.share-buttons {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid var(--border-light);
 }
 
 /* Dark mode toggle button */
