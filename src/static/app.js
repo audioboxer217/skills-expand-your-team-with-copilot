@@ -569,6 +569,12 @@ document.addEventListener("DOMContentLoaded", () => {
         `
         }
       </div>
+      <div class="share-buttons">
+        <span class="share-label">Share:</span>
+        <a class="share-btn share-twitter" href="#" title="Share on X (Twitter)">𝕏</a>
+        <a class="share-btn share-whatsapp" href="#" title="Share on WhatsApp">💬</a>
+        <button class="share-btn share-copy" title="Copy link">🔗</button>
+      </div>
     `;
 
     // Add click handlers for delete buttons
@@ -586,6 +592,45 @@ document.addEventListener("DOMContentLoaded", () => {
         });
       }
     }
+
+    // Add click handlers for share buttons
+    const shareText = `Check out "${name}" at Mergington High School! ${details.description}`;
+    const shareUrl = window.location.href.split("?")[0] + `?activity=${encodeURIComponent(name)}`;
+
+    const twitterBtn = activityCard.querySelector(".share-twitter");
+    twitterBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      window.open(
+        `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(shareUrl)}`,
+        "_blank",
+        "noopener,noreferrer"
+      );
+    });
+
+    const whatsappBtn = activityCard.querySelector(".share-whatsapp");
+    whatsappBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      window.open(
+        `https://wa.me/?text=${encodeURIComponent(shareText + " " + shareUrl)}`,
+        "_blank",
+        "noopener,noreferrer"
+      );
+    });
+
+    const copyBtn = activityCard.querySelector(".share-copy");
+    copyBtn.addEventListener("click", () => {
+      navigator.clipboard.writeText(shareUrl).then(() => {
+        const original = copyBtn.textContent;
+        copyBtn.textContent = "✅";
+        copyBtn.title = "Link copied!";
+        setTimeout(() => {
+          copyBtn.textContent = original;
+          copyBtn.title = "Copy link";
+        }, 2000);
+      }).catch(() => {
+        copyBtn.title = "Copy not supported in this browser";
+      });
+    });
 
     activitiesList.appendChild(activityCard);
   }
